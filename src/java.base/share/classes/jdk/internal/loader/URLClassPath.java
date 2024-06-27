@@ -644,14 +644,35 @@ public class URLClassPath {
                     URLClassPath.check(url);
                 }
                 uc = url.openConnection();
-                InputStream in = uc.getInputStream();
+
                 if (uc instanceof JarURLConnection) {
-                    /* Need to remember the jar file so it can be closed
-                     * in a hurry.
-                     */
                     JarURLConnection juc = (JarURLConnection)uc;
-                    jarfile = JarLoader.checkJar(juc.getJarFile());
+                    /*
+                     * Need to remember the jar file so it can be closed
+                     * in a hurry. However, the call to juc.getJarFile() can
+                     * result in a FileNotFoundException if a non-existent
+                     * class is contained in the url. This prevents the jarfile
+                     * from being saved which in turn prevents the close()
+                     * method from closing the jar file. When this situation
+                     * occurs, the the path after the initial "!/" is stripped
+                     * from the url.
+                    */
+                    try {
+                        JarFile tmpJarFile = JarLoader.checkJar(juc.getJarFile());
+                        // if usecaches == false, the JarFile will be closed automatically
+                        if (juc.getUseCaches()) jarfile = tmpJarFile;
+                    } catch (FileNotFoundException e) {
+                        if (juc.getUseCaches()) {
+                            URL baseJarUrl = new URL("jar:" + juc.getJarFileURL() + "!/");
+                            JarURLConnection basejuc =
+                                (JarURLConnection) baseJarUrl.openConnection();
+                            jarfile = JarLoader.checkJar(basejuc.getJarFile());
+                        }
+                        throw e;
+                    }
                 }
+
+                InputStream in = uc.getInputStream();
             } catch (Exception e) {
                 return null;
             }
