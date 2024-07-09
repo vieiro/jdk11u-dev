@@ -189,6 +189,11 @@ ifeq ($(call And, $(call isTargetOs, solaris) $(call isTargetCpu, sparcv9)), tru
   LIBAWT_ASFLAGS = -P -xarch=v9a
 endif
 
+ifeq ($(TOOLCHAIN_TYPE), clang)
+  # For XCode 14.3.1 and clang 14.0.3, allow deprecated-non-prototype
+  LIBAWT_CFLAGS += -Wno-deprecated-non-prototype
+endif
+
 ifeq ($(call isTargetOs, solaris), false)
   LIBAWT_CFLAGS += -DMLIB_NO_LIBSUNMATH
 endif
