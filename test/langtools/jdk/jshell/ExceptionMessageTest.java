@@ -25,7 +25,7 @@
  * @test
  * @bug 8185108
  * @summary Test exception().getMessage() in events returned by eval()
- * @run testng ExceptionMessageTest
+ * @run testng/othervm -Djava.net.preferIPv4Stack=true ExceptionMessageTest
  */
 
 import java.util.HashMap;

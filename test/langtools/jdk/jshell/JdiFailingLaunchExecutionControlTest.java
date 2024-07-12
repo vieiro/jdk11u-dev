@@ -27,7 +27,7 @@
  * @summary Tests for JDI connector failure
  * @modules jdk.jshell/jdk.jshell jdk.jshell/jdk.jshell.spi jdk.jshell/jdk.jshell.execution
  * @build DyingRemoteAgent
- * @run testng JdiFailingLaunchExecutionControlTest
+ * @run testng/othervm -Djava.net.preferIPv4Stack=true JdiFailingLaunchExecutionControlTest  
  */
 
 import org.testng.annotations.Test;
