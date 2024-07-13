@@ -319,15 +319,17 @@ class VMConnection {
         } catch (IOException ioe) {
             ioe.printStackTrace();
             System.err.println("\n Unable to launch target VM.");
+            throw new RuntimeException(ioe);
         } catch (IllegalConnectorArgumentsException icae) {
             icae.printStackTrace();
             System.err.println("\n Internal debugger error.");
+            throw new RuntimeException(icae);
         } catch (VMStartException vmse) {
             System.err.println(vmse.getMessage() + "\n");
             dumpFailedLaunchInfo(vmse.process());
             System.err.println("\n Target VM failed to initialize.");
+            throw new RuntimeException(vmse);
         }
-        return null; // Shuts up the compiler
     }
 
     /* attach to running target vm */
@@ -338,11 +340,12 @@ class VMConnection {
         } catch (IOException ioe) {
             ioe.printStackTrace();
             System.err.println("\n Unable to attach to target VM.");
+            throw new RuntimeException(ioe);
         } catch (IllegalConnectorArgumentsException icae) {
             icae.printStackTrace();
             System.err.println("\n Internal debugger error.");
+            throw new RuntimeException(icae);
         }
-        return null; // Shuts up the compiler
     }
 
     /* listen for connection from target vm */
@@ -357,10 +360,11 @@ class VMConnection {
         } catch (IOException ioe) {
             ioe.printStackTrace();
             System.err.println("\n Unable to attach to target VM.");
+            throw new RuntimeException(ioe);
         } catch (IllegalConnectorArgumentsException icae) {
             icae.printStackTrace();
             System.err.println("\n Internal debugger error.");
+            throw new RuntimeException(icae);
         }
-        return null; // Shuts up the compiler
     }
 }
