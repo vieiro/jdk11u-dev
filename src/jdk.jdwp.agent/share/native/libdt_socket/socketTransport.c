@@ -325,6 +325,8 @@ parseAddress(const char *address, struct sockaddr_in *sa) {
         buf[colon - address] = '\0';
         hostname = buf;
 
+        fprintf(stderr, "DEBUG: Using hostname '%s'\n", hostname);
+
         /*
          * First see if the host is a literal IP address.
          * If not then try to resolve it.
@@ -341,6 +343,7 @@ parseAddress(const char *address, struct sockaddr_in *sa) {
             ai = dbgsysGetAddrInfo(hostname, NULL, &hints, &results);
 
             if (ai != 0) {
+                fprintf(stderr, "DEBUG: AI (UNKNOWN HOST %s) %d %s\n", hostname, ai, gai_strerror(ai));
                 /* don't use RETURN_IO_ERROR as unknown host is normal */
                 setLastError(0, "getaddrinfo: unknown host");
                 (*callback->free)(buf);
@@ -349,6 +352,7 @@ parseAddress(const char *address, struct sockaddr_in *sa) {
 
             /* lookup was successful */
             sa->sin_addr =  ((struct sockaddr_in *)results->ai_addr)->sin_addr;
+            fprintf(stderr, "DEBUG: Hostname resolution correct: %s \n", hostname);
             freeaddrinfo(results);
         } else {
             sa->sin_addr.s_addr = addr;
