@@ -132,6 +132,17 @@ jobs:
           echo '/usr/local/opt/make/libexec/gnubin' >> $GITHUB_PATH
         if: runner.os == 'macOS'
 
+      - name: 'macos /etc/hosts'
+        run: |
+          echo "HOSTNAME:"
+          hostname
+          echo "/etc/hosts"
+          cat /etc/hosts
+          echo "127.0.0.1 $( hostname )" | sudo tee -a /etc/hosts
+          echo "/etc/hosts"
+          cat /etc/hosts
+        if: runner.os == 'macOS'
+
       - name: 'Set PATH'
         id: path
         run: |
