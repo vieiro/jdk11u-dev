@@ -186,6 +186,10 @@ abstract class AbstractLauncher extends ConnectorImpl
         synchronized void launchAndAccept() throws
                                 IOException, VMStartException {
 
+            System.err.format("DBG: AbstractLauncher.launchAndAccept %s%n", String.join(",", commandArray));
+            System.err.format("DBG: Transport service type        %s%n", ts == null ? "NULL" : ts.getClass().getName());
+            System.err.format("DBG: Transport service description %s%n", ts == null ? "NULL" : ts.description());
+
             process = Runtime.getRuntime().exec(commandArray);
 
             Thread acceptingThread = acceptConnection();
@@ -198,6 +202,7 @@ abstract class AbstractLauncher extends ConnectorImpl
                 }
 
                 if (exited) {
+                    System.err.format("DBG: AbstractLauncher.launchAndAccept exited %s%n", commandString());
                     throw new VMStartException(
                         "VM initialization failed for: " + commandString(), process);
                 }

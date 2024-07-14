@@ -145,6 +145,7 @@ class VMConnection {
     }
 
     synchronized VirtualMachine open() {
+        System.out.format("connector type %s%n", connector.getClass().getName());
         if (connector instanceof LaunchingConnector) {
             vm = launchTarget();
         } else if (connector instanceof AttachingConnector) {

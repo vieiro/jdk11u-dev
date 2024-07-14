@@ -31,7 +31,7 @@ import java.io.*;
  * Framework used by all JDI regression tests
  */
 abstract public class TestScaffold extends TargetAdapter {
-    private boolean shouldTrace = false;
+    private boolean shouldTrace = true;
     private VMConnection connection;
     private VirtualMachine vm;
     private EventRequestManager requestManager;
@@ -451,6 +451,10 @@ abstract public class TestScaffold extends TargetAdapter {
 
     protected void failure(String str) {
         println(str);
+        StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement traceElement : trace) {
+            System.err.println("\tat " + traceElement);
+        }
         testFailed = true;
     }
 
@@ -512,6 +516,8 @@ abstract public class TestScaffold extends TargetAdapter {
      */
     public void connect(String args[]) {
         ArgInfo argInfo = parseArgs(args);
+
+        System.out.format("TestScaffold.connect(%s)%n", String.join(",", args));
 
         argInfo.targetVMArgs += VMConnection.getDebuggeeVMOptions();
         connection = new VMConnection(argInfo.connectorSpec,
