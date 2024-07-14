@@ -242,9 +242,21 @@ getLocalHostAddress() {
     }
 
     // getaddrinfo might return more than one address
-    // but we are using first one only
-    addr = ((struct sockaddr_in *)(res->ai_addr))->sin_addr.s_addr;
+    // but we are using first one only that matches the family
+    int found = 0;
+    for(struct addrinfo * p = res; p != NULL; p = p->ai_next) {
+        fprintf(stderr, "FAMILY: %d\n", p->ai_family);
+        if (p->ai_family == AF_INET)  {
+            addr = ((struct sockaddr_in *)(p->ai_addr))->sin_addr.s_addr;
+            fprintf(stderr, "DEBUG: Using address %x for 'localhost'\n", addr);
+            found = 1;
+            break;
+        }
+    }
     freeaddrinfo(res);
+    if (! found) {
+        RETURN_IO_ERROR("send failed during handshake");
+    }
     return addr;
 }
 
