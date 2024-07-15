@@ -77,7 +77,7 @@ public class SocketTransportService extends TransportService {
              */
             if (address.isAnyLocalAddress()) {
                 try {
-                    address = InetAddress.getLocalHost();
+                    address = InetAddress.getLocalHost().getHostAddress();
                 } catch (UnknownHostException uhe) {
                     byte[] loopback = {0x7f,0x00,0x00,0x01};
                     try {
