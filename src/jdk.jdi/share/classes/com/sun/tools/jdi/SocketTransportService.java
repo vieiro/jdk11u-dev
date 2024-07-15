@@ -104,7 +104,7 @@ public class SocketTransportService extends TransportService {
                     result = hostaddr;
                 }
             } else {
-                result = hostname;
+                result = hostaddr;
             }
 
             /*
@@ -227,7 +227,7 @@ public class SocketTransportService extends TransportService {
         }
 
         if (host.equals("*")) {
-            host = InetAddress.getLocalHost().getHostName();
+            host = InetAddress.getLocalHost().getHostAddress();
         }
 
         int port;
