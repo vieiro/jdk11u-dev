@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2022, 2023, Oracle and/or its affiliates. All rights reserved.
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 #
 # This code is free software; you can redistribute it and/or modify it
@@ -23,19 +23,32 @@
 # questions.
 #
 
-# Versions and download locations for dependencies used by GitHub Actions (GHA)
+name: 'Get GTest'
+description: 'Download GTest source'
+outputs:
+  path:
+    description: 'Path to the installed GTest'
+    value: ${{ steps.path-name.outputs.path }}
 
-GTEST_VERSION=1.8.x
-JTREG_VERSION=7.3.1+1
+runs:
+  using: composite
+  steps:
+    - name: 'Get GTest version configuration'
+      id: version
+      uses: ./.github/actions/config
+      with:
+        var: GTEST_VERSION
 
-LINUX_X64_BOOT_JDK_EXT=tar.gz
-LINUX_X64_BOOT_JDK_URL=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.23%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.23_9.tar.gz
-LINUX_X64_BOOT_JDK_SHA256=23e47ea7a3015be3240f21185fd902adebdcf76530757c9b482c7eb5bd3417c2
+    - name: 'Checkout GTest source'
+      uses: actions/checkout@v4
+      with:
+        repository: google/googletest
+        ref: 'v${{ steps.version.outputs.value }}'
+        path: gtest
 
-WINDOWS_X64_BOOT_JDK_EXT=zip
-WINDOWS_X64_BOOT_JDK_URL=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.23%2B9/OpenJDK11U-jdk_x64_windows_hotspot_11.0.23_9.zip
-WINDOWS_X64_BOOT_JDK_SHA256=d7a9f8ceee9a5785dcbbcbec20a07b1366efec59ba652ef7e03f6f7d10f52b85
-
-MACOS_X64_BOOT_JDK_EXT=tar.gz
-MACOS_X64_BOOT_JDK_URL=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.23%2B9/OpenJDK11U-jdk_x64_mac_hotspot_11.0.23_9.tar.gz
-MACOS_X64_BOOT_JDK_SHA256=4dbd21d9a0311d321f5886eda50c3086026ed61d02e1a85f7b8c2e9ad557bf03
+    - name: 'Export path to where GTest is installed'
+      id: path-name
+      run: |
+        # Export the path
+        echo 'path=gtest' >> $GITHUB_OUTPUT
+      shell: bash

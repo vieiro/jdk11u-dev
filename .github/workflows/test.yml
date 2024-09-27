@@ -78,6 +78,9 @@ jobs:
           - test-name: 'langtools/tier1'
             test-suite: 'test/langtools/:tier1'
 
+          - test-name: 'gtest'
+            test-suite: 'gtest'
+
           - test-name: 'hs/tier1 common'
             test-suite: 'test/hotspot/jtreg/:tier1_common'
             debug-suffix: -debug
@@ -115,6 +118,10 @@ jobs:
       - name: 'Get JTReg'
         id: jtreg
         uses: ./.github/actions/get-jtreg
+
+      - name: 'Get gtest'
+        id: gtest
+        uses: ./.github/actions/get-gtest
 
       - name: 'Get bundles'
         id: bundles
