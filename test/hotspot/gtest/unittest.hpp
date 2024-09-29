@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -31,7 +31,6 @@
 
 #include "utilities/vmassert_uninstall.hpp"
 #include "gtest/gtest.h"
-#include "utilities/vmassert_reinstall.hpp"
 
 // gtest/gtest.h includes assert.h which will define the assert macro, but hotspot has its
 // own standards incompatible assert macro that takes two parameters.
