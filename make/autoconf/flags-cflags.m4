@@ -207,8 +207,10 @@ AC_DEFUN([FLAGS_SETUP_WARNINGS],
 
       WARNINGS_ENABLE_ALL="-Wall -Wextra -Wformat=2"
       WARNINGS_ENABLE_ADDITIONAL_JVM="-Wpointer-arith -Wsign-compare -Wunused-function -Wundef -Wunused-value -Woverloaded-virtual"
-
+      # VIEIRO
       DISABLED_WARNINGS="unused-parameter unused"
+      AC_MSG_RESULT([VIEIRO COMPILER VERSION ])
+      DISABLED_WARNINGS="unused-parameter unused deprecated-declarations deprecated-non-prototype"
       ;;
 
     xlc)
