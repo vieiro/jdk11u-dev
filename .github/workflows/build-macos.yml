@@ -55,7 +55,7 @@ on:
 jobs:
   build-macos:
     name: build
-    runs-on: macos-12
+    runs-on: macos-13
 
     strategy:
       fail-fast: false
@@ -98,6 +98,8 @@ jobs:
           --with-jtreg=${{ steps.jtreg.outputs.path }}
           --enable-jtreg-failure-handler
           --with-zlib=system
+          --with-extra-cflags="-Wno-deprecated-declarations -Wno-deprecated-non-prototype"
+          --with-extra-cxxflags="-Wno-deprecated-declarations -Wno-deprecated-non-prototype"
           ${{ inputs.extra-conf-options }} ${{ inputs.configure-arguments }} || (
           echo "Dumping config.log:" &&
           cat config.log &&
