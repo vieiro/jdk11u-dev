@@ -208,8 +208,15 @@ AC_DEFUN([FLAGS_SETUP_WARNINGS],
       WARNINGS_ENABLE_ALL="-Wall -Wextra -Wformat=2"
       WARNINGS_ENABLE_ADDITIONAL_JVM="-Wpointer-arith -Wsign-compare -Wunused-function -Wundef -Wunused-value -Woverloaded-virtual"
 
-      # DISABLED_WARNINGS="unused-parameter unused"
-      DISABLED_WARNINGS="unused-parameter unused deprecated-declarations deprecated-non-prototype"
+      DISABLED_WARNINGS="unused-parameter unused"
+      # Use "-Wno-deprecated-declarations" and "-Wno-deprecated-non-prototype" with clang >= 14 on OS/X
+      if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+        CLANG_VERSION_MAJOR=`echo $CLANG_VERSION_NUMBER | awk -F. '{print $1}'`
+        if [ "0$CLANG_VERSION_MAJOR" -gt 13 ]; then
+          DISABLED_WARNINGS="unused-parameter unused deprecated-declarations deprecated-non-prototype"
+        fi
+      fi
+
       ;;
 
     xlc)
