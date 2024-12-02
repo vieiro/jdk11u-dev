@@ -115,6 +115,9 @@ public class ClhsdbFindPC {
             //   - LingeredAppWithTrivialMain.main(java.lang.String[]) @bci=1, line=33, pc=0x00007ff18ff519f0, ...
             String pcAddress = null;
             String[] parts = output.split("LingeredAppWithTrivialMain.main");
+            if (parts.length < 2) {
+                throw new IllegalArgumentException(String.format("LingeredAppWithTrivialMain.main got output='%s' coreFileName '%s'", output, coreFileName));
+            }
             String[] tokens = parts[1].split(" ");
             for (String token : tokens) {
                 if (token.contains("pc")) {
