@@ -110,6 +110,7 @@ public class ClhsdbFindPC {
             } else {
                 output = test.run(theApp.getPid(), cmds, null, null);
             }
+            System.out.format("OUTPUT: '%s'%n", output);
 
             // Extract pc address from the following line:
             //   - LingeredAppWithTrivialMain.main(java.lang.String[]) @bci=1, line=33, pc=0x00007ff18ff519f0, ...
