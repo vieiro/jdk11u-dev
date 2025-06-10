@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 final class Linker {
@@ -207,6 +208,10 @@ final class Linker {
     private static Path getVC141AndNewerLinker() throws Exception {
         String programFilesX86 = System.getenv("ProgramFiles(x86)");
         if (programFilesX86 == null) {
+            Map<String, String> env = System.getenv();
+            for(Map.Entry<String, String> entry : env.entrySet()) {
+                System.err.format("ENV: '%s' = '%s'%n", entry.getKey(), entry.getValue());
+            }
             throw new IllegalStateException("Could not read the ProgramFiles(x86) environment variable");
         }
         String vswherePath = programFilesX86 + "\\Microsoft Visual Studio\\Installer\\vswhere.exe";
