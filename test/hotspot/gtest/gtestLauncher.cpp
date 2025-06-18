@@ -25,6 +25,7 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include <intrin.h> // AARCH64 FIX: winnt.h(6342): error C3861: '_CountOneBits64': identifier not found
 #include <excpt.h>
 extern LONG WINAPI topLevelExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo);
 #endif
