@@ -157,6 +157,7 @@ jobs:
           && bash ./.github/scripts/gen-test-summary.sh "$GITHUB_STEP_SUMMARY" "$GITHUB_OUTPUT"
         env:
           PATH: ${{ steps.path.outputs.value }}
+          "ProgramFiles(x86)": "C:\\Program Files(x86)"
 
         # This is a separate step, since if the markdown from a step gets bigger than
         # 1024 kB it is skipped, but then the short summary above is still generated
