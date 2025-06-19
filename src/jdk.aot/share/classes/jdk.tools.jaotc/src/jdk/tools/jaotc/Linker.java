@@ -207,7 +207,7 @@ final class Linker {
     private static Path getVC141AndNewerLinker() throws Exception {
         String programFilesX86 = System.getenv("ProgramFiles(x86)");
         if (programFilesX86 == null) {
-            throw new IllegalStateException("Could not read the ProgramFiles(x86) environment variable");
+            programFilesX86 = "C:\\Program Files (x86)";
         }
         String vswherePath = programFilesX86 + "\\Microsoft Visual Studio\\Installer\\vswhere.exe";
         Path vswhere = Paths.get(vswherePath);
