@@ -169,6 +169,7 @@ final class Linker {
             }
         } catch (Exception e) {
             main.printer.printlnVerbose("Could not find VC14 or newer version of linker: " + e.getMessage());
+            main.printer.printlnVerbose("System.getenv() is" + System.getenv());
             if (main.options.debug) {
                 e.printStackTrace();
             }
@@ -207,7 +208,9 @@ final class Linker {
     private static Path getVC141AndNewerLinker() throws Exception {
         String programFilesX86 = System.getenv("ProgramFiles(x86)");
         if (programFilesX86 == null) {
-            programFilesX86 = "C:\\Program Files (x86)";
+            String message = String.format("Could not find 'ProgramFiles(x86)' in %s", System.getenv());
+            System.err.println(message);
+            throw new IllegalStateException(message);
         }
         String vswherePath = programFilesX86 + "\\Microsoft Visual Studio\\Installer\\vswhere.exe";
         Path vswhere = Paths.get(vswherePath);
