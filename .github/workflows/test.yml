@@ -126,7 +126,7 @@ jobs:
       - name: 'Install dependencies'
         run: |
           # On macOS we need to install some dependencies for testing
-          brew install make
+          brew install autoconf make
           sudo xcode-select --switch /Applications/Xcode_15.4.app/Contents/Developer
           # This will make GNU make available as 'make' and not only as 'gmake'
           echo '/usr/local/opt/make/libexec/gnubin' >> $GITHUB_PATH
