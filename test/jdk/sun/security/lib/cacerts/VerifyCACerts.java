@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2025, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2026, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -28,7 +28,7 @@
  *      8223499 8225392 8232019 8234245 8233223 8225068 8225069 8243321 8243320
  *      8243559 8225072 8258630 8259312 8256421 8225081 8225082 8225083 8245654
  *      8305975 8304760 8307134 8295894 8314960 8317373 8317374 8318759 8319187
- *      8321408 8316138 8341057 8303770 8350498 8359170
+ *      8321408 8316138 8341057 8303770 8350498 8359170 8361212 8372351 8387123
  * @summary Check root CA entries in cacerts file
  */
 import java.io.ByteArrayInputStream;
@@ -47,12 +47,12 @@ public class VerifyCACerts {
             + File.separator + "security" + File.separator + "cacerts";
 
     // The numbers of certs now.
-    private static final int COUNT = 113;
+    private static final int COUNT = 110;
 
     // SHA-256 of cacerts, can be generated with
     // shasum -a 256 cacerts | sed -e 's/../&:/g' | tr '[:lower:]' '[:upper:]' | cut -c1-95
     private static final String CHECKSUM
-            = "1E:63:88:DF:34:AD:7E:61:3F:06:BD:C4:DC:FE:05:52:9B:0D:86:6E:64:DA:E8:25:7C:C0:15:8F:31:C0:2C:78";
+            = "CC:5F:A2:0E:4A:EA:6C:77:F6:47:23:93:E8:0B:2C:5D:A2:BE:A9:01:0B:F5:C8:33:63:B9:15:78:BF:F9:D9:61";
 
     // map of cert alias to SHA-256 fingerprint
     @SuppressWarnings("serial")
@@ -140,8 +140,6 @@ public class VerifyCACerts {
                     "96:BC:EC:06:26:49:76:F3:74:60:77:9A:CF:28:C5:A7:CF:E8:A3:C0:AA:E1:1A:8F:FC:EE:05:C0:BD:DF:08:C6");
             put("letsencryptisrgx2 [jdk]",
                     "69:72:9B:8E:15:A8:6E:FC:17:7A:57:AF:B7:17:1D:FC:64:AD:D2:8C:2F:CA:8C:F1:50:7E:34:45:3C:CB:14:70");
-            put("luxtrustglobalrootca [jdk]",
-                    "A1:B2:DB:EB:64:E7:06:C6:16:9E:3C:41:18:B2:3B:AA:09:01:8A:84:27:66:6D:8B:F0:E2:88:91:EC:05:19:50");
             put("quovadisrootca [jdk]",
                     "A4:5E:DE:3B:BB:F0:9C:8A:E1:5C:72:EF:C0:72:68:D6:93:A2:1C:99:6F:D5:1E:67:CA:07:94:60:FD:6D:88:73");
             put("quovadisrootca1g3 [jdk]",
@@ -190,14 +188,6 @@ public class VerifyCACerts {
                     "43:DF:57:74:B0:3E:7F:EF:5F:E4:0D:93:1A:7B:ED:F1:BB:2E:6B:42:73:8C:4E:6D:38:41:10:3D:3A:A7:F3:39");
             put("entrustevca [jdk]",
                     "73:C1:76:43:4F:1B:C6:D5:AD:F4:5B:0E:76:E7:27:28:7C:8D:E5:76:16:C1:E6:E6:14:1A:2B:2C:BC:7D:8E:4C");
-            put("affirmtrustnetworkingca [jdk]",
-                    "0A:81:EC:5A:92:97:77:F1:45:90:4A:F3:8D:5D:50:9F:66:B5:E2:C5:8F:CD:B5:31:05:8B:0E:17:F3:F0:B4:1B");
-            put("affirmtrustpremiumca [jdk]",
-                    "70:A7:3F:7F:37:6B:60:07:42:48:90:45:34:B1:14:82:D5:BF:0E:69:8E:CC:49:8D:F5:25:77:EB:F2:E9:3B:9A");
-            put("affirmtrustcommercialca [jdk]",
-                    "03:76:AB:1D:54:C5:F9:80:3C:E4:B2:E2:01:A0:EE:7E:EF:7B:57:B6:36:E8:A9:3C:9B:8D:48:60:C9:6F:5F:A7");
-            put("affirmtrustpremiumeccca [jdk]",
-                    "BD:71:FD:F6:DA:97:E4:CF:62:D1:64:7A:DD:25:81:B0:7D:79:AD:F8:39:7E:B4:EC:BA:9C:5E:84:88:82:14:23");
             put("ttelesecglobalrootclass3ca [jdk]",
                     "FD:73:DA:D3:1C:64:4F:F1:B4:3B:EF:0C:CD:DA:96:71:0B:9C:D9:87:5E:CA:7E:31:70:7A:F3:E9:6D:52:2B:BD");
             put("ttelesecglobalrootclass2ca [jdk]",
@@ -284,6 +274,10 @@ public class VerifyCACerts {
                     "7E:76:26:0A:E6:9A:55:D3:F0:60:B0:FD:18:B2:A8:C0:14:43:C8:7B:60:79:10:30:C9:FA:0B:05:85:10:1A:38");
             put("sectigocodesignroote46 [jdk]",
                     "8F:63:71:D8:CC:5A:A7:CA:14:96:67:A9:8B:54:96:39:89:51:E4:31:9F:7A:FB:CC:6A:66:0D:67:3E:43:8D:0B");
+            put("wisekeyglobalrootgbca [jdk]",
+                    "6B:9C:08:E8:6E:B0:F7:67:CF:AD:65:CD:98:B6:21:49:E5:49:4A:67:F5:84:5E:7B:D1:ED:01:9F:27:B8:6B:D6");
+            put("wisekeyglobalrootgcca [jdk]",
+                    "85:60:F9:1C:36:24:DA:BA:95:70:B5:FE:A0:DB:E3:6F:F1:1A:83:23:BE:94:86:85:4F:B3:F3:4A:55:71:19:8D");
         }
     };
 
@@ -297,8 +291,6 @@ public class VerifyCACerts {
             add("addtrustexternalca [jdk]");
             // Valid until: Sat May 30 10:44:50 GMT 2020
             add("addtrustqualifiedca [jdk]");
-            // Valid until: Wed Mar 17 02:51:37 PDT 2021
-            add("luxtrustglobalrootca [jdk]");
             // Valid until: Wed Mar 17 11:33:33 PDT 2021
             add("quovadisrootca [jdk]");
             // Valid until: Sat May 21 04:00:00 GMT 2022

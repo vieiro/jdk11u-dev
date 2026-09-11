@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1995, 2020, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1995, 2022, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -50,6 +50,8 @@
  * the CreateExecutionEnviroment will remove the -d<n> flags.
  */
 
+
+#include <assert.h>
 
 #include "java.h"
 #include "jni.h"
@@ -1008,7 +1010,7 @@ static void
 SetMainModule(const char *s)
 {
     static const char format[] = "-Djdk.module.main=%s";
-    char* slash = JLI_StrChr(s, '/');
+    const char* slash = JLI_StrChr(s, '/');
     size_t s_len, def_len;
     char *def;
 
@@ -1695,7 +1697,8 @@ TranslateApplicationArgs(int jargc, const char **jargv, int *pargc, char ***parg
     for (i = 0; i < jargc; i++) {
         const char *arg = jargv[i];
         if (arg[0] == '-' && arg[1] == 'J') {
-            *nargv++ = ((arg + 2) == NULL) ? NULL : JLI_StringDup(arg + 2);
+            assert(arg[2] != '\0' && "Invalid JAVA_ARGS or EXTRA_JAVA_ARGS defined by build");
+            *nargv++ = JLI_StringDup(arg + 2);
         }
     }
 
